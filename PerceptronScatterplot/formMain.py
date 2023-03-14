@@ -166,7 +166,7 @@ class Application(ttk.Frame):
                 s = 30
             )
             self.fig_canvas.draw()
-        except(ValueError):
+        except (ValueError):
             messagebox.showerror("エラー!", "数値を入力して下さい。")
 
 if __name__=='__main__':
