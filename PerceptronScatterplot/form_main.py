@@ -17,20 +17,20 @@ class Application(ttk.Frame):
         self.frame.pack(side = tk.RIGHT)
         
         # グラフフレームの作成
-        self.createGraphFrame()
+        self.create_graph_frame()
         
         # パーセプトロンの種類を選択するラジオボタン作成
-        self.createPerceptronTypeRadio()
+        self.create_perceptron_type_radio()
         
         # バイアス値入力テキストボックス作成
-        self.createBiasInputBox()
+        self.create_bias_input_box()
         
         # データ数入力テキストボックス作成
-        self.createDataCountInputBox()
+        self.create_datacount_input_box()
     
-    def createGraphFrame(self):
+    def create_graph_frame(self):
         # matplotlib配置用フレーム
-        qraphFrame = ttk.Frame(self.master)
+        qraph_frame = ttk.Frame(self.master)
         
         # matplotlibの描画領域の作成
         fig = Figure()
@@ -39,57 +39,57 @@ class Application(ttk.Frame):
         self.ax = fig.add_subplot(1, 1, 1)
         
         # matplotlibの描画領域とウィジェット(Frame)の関連付け
-        self.fig_canvas = FigureCanvasTkAgg(fig, qraphFrame)
+        self.fig_canvas = FigureCanvasTkAgg(fig, qraph_frame)
         
         # matplotlibのツールバーを作成
-        self.toolbar = NavigationToolbar2Tk(self.fig_canvas, qraphFrame)
+        self.toolbar = NavigationToolbar2Tk(self.fig_canvas, qraph_frame)
         
         # matplotlibのグラフをフレームに配置
         self.fig_canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
         # フレームをウィンドウに配置
-        qraphFrame.pack(side = tk.LEFT)
+        qraph_frame.pack(side = tk.LEFT)
         
         # ボタンの作成
-        self.s_PerceptronButton = ttk.Button(
+        self.s_perceptron_button = ttk.Button(
             self.frame,
             text = "散布図を描写",
             command = self.perceptronButton_click
         )
         
         # 散布図描写ボタンの配置
-        self.s_PerceptronButton.pack(side = tk.TOP, pady = 4)
+        self.s_perceptron_button.pack(side = tk.TOP, pady = 4)
     
-    def createPerceptronTypeRadio(self):
+    def create_perceptron_type_radio(self):
         '''
         パーセプトロンの種類を選択するラジオボタン作成
         '''
         # ラベルフレームの作成
-        labelFrame = ttk.LabelFrame(self.frame, text="パーセプトロンの種類")
+        label_frame = ttk.LabelFrame(self.frame, text="パーセプトロンの種類")
         
         # ラジオボタンの値
-        self.pla_TypeRadioVar = tk.IntVar(value = 0)
+        self.pla_type_radio_var = tk.IntVar(value = 0)
         
         # ラジオボタン作成
-        radioText = ["単純パーセプトロン", "3層パーセプトロン(MLP)"]
-        for i in range(len(radioText)):
-            self.perceptronRadio = ttk.Radiobutton(
-                labelFrame,
+        radio_text = ["単純パーセプトロン", "3層パーセプトロン(MLP)"]
+        for i in range(len(radio_text)):
+            self.perceptron_radio = ttk.Radiobutton(
+                label_frame,
                 value = i,
-                text = radioText[i],
-                variable = self.pla_TypeRadioVar
+                text = radio_text[i],
+                variable = self.pla_type_radio_var
             )
-            self.perceptronRadio.pack(side=tk.TOP, anchor=tk.W)
+            self.perceptron_radio.pack(side=tk.TOP, anchor=tk.W)
         
         # 配置
-        labelFrame.pack(side=tk.RIGHT, padx=30, pady=10, anchor=tk.NE)
+        label_frame.pack(side=tk.RIGHT, padx=30, pady=10, anchor=tk.NE)
     
-    def createBiasInputBox(self):
+    def create_bias_input_box(self):
         '''
         バイアス値入力テキストボックス作成
         '''
         # バイアス値入力ボックスのラベル
-        Label = ttk.Label(
+        label = ttk.Label(
             self.frame,
             width = 8,
             text = "バイアス",
@@ -97,25 +97,25 @@ class Application(ttk.Frame):
         )
         
         # バイアス値入力ボックス
-        self.biasInputBox = ttk.Entry(
+        self.bias_input_box = ttk.Entry(
             self.frame,
             width = 10,
             justify = tk.CENTER
         )
         
         # 初期値設定
-        self.biasInputBox.insert(tk.END, '-0.5')
+        self.bias_input_box.insert(tk.END, '-0.5')
         
         # 配置
-        Label.pack(anchor = tk.NW)
-        self.biasInputBox.pack(anchor = tk.NW)
+        label.pack(anchor = tk.NW)
+        self.bias_input_box.pack(anchor = tk.NW)
     
-    def createDataCountInputBox(self):
+    def create_datacount_input_box(self):
         '''
         データ数入力テキストボックス作成
         '''
         # データ数入力ボックスのラベル
-        Label = ttk.Label(
+        label = ttk.Label(
             self.frame,
             width = 10,
             text = "データ個数",
@@ -123,18 +123,18 @@ class Application(ttk.Frame):
         )
         
         # データ数入力ボックス
-        self.dataCountInputBox = ttk.Entry(
+        self.datacount_input_box = ttk.Entry(
             self.frame,
             width = 10,
             justify = tk.CENTER
         )
         
         # 初期値設定
-        self.dataCountInputBox.insert(tk.END, '500')
+        self.datacount_input_box.insert(tk.END, '500')
         
         # 配置
-        Label.pack(anchor = tk.NW)
-        self.dataCountInputBox.pack(anchor = tk.NW)
+        label.pack(anchor = tk.NW)
+        self.datacount_input_box.pack(anchor = tk.NW)
     
     def perceptronButton_click(self):
         '''
@@ -142,20 +142,20 @@ class Application(ttk.Frame):
         '''
         try:
             # バイアス値を取得
-            BIAS = float(self.biasInputBox.get())
+            BIAS = float(self.bias_input_box.get())
             
             # テストデータを生成
             x = np.array([
                 [random.random(), random.random()]
-                for i in range(int(self.dataCountInputBox.get()))
+                for i in range(int(self.datacount_input_box.get()))
             ])
             
             # パーセプトロンの散布図を描写
-            mode = self.pla_TypeRadioVar.get()
+            mode = self.pla_type_radio_var.get()
             if mode == 0:
-                y = pla.simplePerceptron(x, BIAS)
+                y = pla.simple_perceptron(x, BIAS)
             elif mode == 1:
-                y = pla.threeLayerPerceptron(x, BIAS)
+                y = pla.three_layer_perceptron(x, BIAS)
             
             # 散布図を表示
             self.ax.clear()

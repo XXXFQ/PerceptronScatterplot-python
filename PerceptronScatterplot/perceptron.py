@@ -2,7 +2,7 @@ import math
 import numpy as np
 
 class Perceptron:
-    def simplePerceptron(x, bias = -0.5):
+    def simple_perceptron(x, bias = -0.5):
         '''
         単純パーセプトロン
         :param 論理演算の入力値の組合せ
@@ -19,7 +19,7 @@ class Perceptron:
         ])
         return y
     
-    def threeLayerPerceptron(x, bias = -0.6):
+    def three_layer_perceptron(x, bias = -0.6):
         '''
         3層パーセプトロン
         :param 論理演算の入力値の組合せ
@@ -42,4 +42,4 @@ class Perceptron:
         ])
         
         # 中間層の結果を利用し、出力層の論理演算の値を求めて返す
-        return Perceptron.simplePerceptron(m, bias)
+        return Perceptron.simple_perceptron(m, bias)
