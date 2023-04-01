@@ -2,9 +2,10 @@ import random
 import numpy as np
 import tkinter as tk
 from tkinter import ttk, messagebox
-from perceptron import Perceptron as pla
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+
+from .perceptron import Perceptron as pla
 
 class Application(ttk.Frame):
     def __init__(self, master=None):
@@ -14,7 +15,7 @@ class Application(ttk.Frame):
         
         # 通常のフレームを配置
         self.frame = tk.Frame(self.master)
-        self.frame.pack(side = tk.RIGHT)
+        self.frame.pack(side=tk.RIGHT)
         
         # グラフフレームの作成
         self.create_graph_frame()
@@ -48,17 +49,17 @@ class Application(ttk.Frame):
         self.fig_canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
         # フレームをウィンドウに配置
-        qraph_frame.pack(side = tk.LEFT)
+        qraph_frame.pack(side=tk.LEFT)
         
         # ボタンの作成
         self.s_perceptron_button = ttk.Button(
             self.frame,
-            text = "散布図を描写",
-            command = self.perceptronButton_click
+            text="散布図を描写",
+            command=self.perceptronButton_click
         )
         
         # 散布図描写ボタンの配置
-        self.s_perceptron_button.pack(side = tk.TOP, pady = 4)
+        self.s_perceptron_button.pack(side=tk.TOP, pady=4)
     
     def create_perceptron_type_radio(self):
         '''
@@ -71,13 +72,13 @@ class Application(ttk.Frame):
         self.pla_type_radio_var = tk.IntVar(value = 0)
         
         # ラジオボタン作成
-        radio_text = ["単純パーセプトロン", "3層パーセプトロン(MLP)"]
+        radio_text = [ "単純パーセプトロン", "3層パーセプトロン(MLP)" ]
         for i in range(len(radio_text)):
             self.perceptron_radio = ttk.Radiobutton(
                 label_frame,
-                value = i,
-                text = radio_text[i],
-                variable = self.pla_type_radio_var
+                value=i,
+                text=radio_text[i],
+                variable=self.pla_type_radio_var
             )
             self.perceptron_radio.pack(side=tk.TOP, anchor=tk.W)
         
@@ -91,24 +92,24 @@ class Application(ttk.Frame):
         # バイアス値入力ボックスのラベル
         label = ttk.Label(
             self.frame,
-            width = 8,
-            text = "バイアス",
-            justify = tk.CENTER
+            width=8,
+            text="バイアス",
+            justify=tk.CENTER
         )
         
         # バイアス値入力ボックス
         self.bias_input_box = ttk.Entry(
             self.frame,
-            width = 10,
-            justify = tk.CENTER
+            width=10,
+            justify=tk.CENTER
         )
         
         # 初期値設定
         self.bias_input_box.insert(tk.END, '-0.5')
         
         # 配置
-        label.pack(anchor = tk.NW)
-        self.bias_input_box.pack(anchor = tk.NW)
+        label.pack(anchor=tk.NW)
+        self.bias_input_box.pack(anchor=tk.NW)
     
     def create_datacount_input_box(self):
         '''
@@ -117,24 +118,24 @@ class Application(ttk.Frame):
         # データ数入力ボックスのラベル
         label = ttk.Label(
             self.frame,
-            width = 10,
-            text = "データ個数",
-            justify = tk.CENTER
+            width=10,
+            text="データ個数",
+            justify=tk.CENTER
         )
         
         # データ数入力ボックス
         self.datacount_input_box = ttk.Entry(
             self.frame,
-            width = 10,
-            justify = tk.CENTER
+            width=10,
+            justify=tk.CENTER
         )
         
         # 初期値設定
         self.datacount_input_box.insert(tk.END, '500')
         
         # 配置
-        label.pack(anchor = tk.NW)
-        self.datacount_input_box.pack(anchor = tk.NW)
+        label.pack(anchor=tk.NW)
+        self.datacount_input_box.pack(anchor=tk.NW)
     
     def perceptronButton_click(self):
         '''
@@ -146,7 +147,7 @@ class Application(ttk.Frame):
             
             # テストデータを生成
             x = np.array([
-                [random.random(), random.random()]
+                [ random.random(), random.random() ]
                 for i in range(int(self.datacount_input_box.get()))
             ])
             
@@ -161,15 +162,17 @@ class Application(ttk.Frame):
             self.ax.clear()
             self.ax.scatter(
                 x[:, 0], x[:, 1],
-                color = ["Yellow" if out == 0 else "Magenta" for out in y],
-                marker = "o",
-                s = 30
+                color=[ "Yellow" if out == 0 else "Magenta" for out in y ],
+                marker="o",
+                s=30
             )
             self.fig_canvas.draw()
         except (ValueError):
             messagebox.showerror("エラー!", "数値を入力して下さい。")
 
-if __name__=='__main__':
+def main():
     root = tk.Tk()
+    root.geometry("900x500")
+    root.minsize(width=900, height=500)
     app = Application(master=root)
     app.mainloop()

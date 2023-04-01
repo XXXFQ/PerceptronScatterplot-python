@@ -2,7 +2,7 @@ import math
 import numpy as np
 
 class Perceptron:
-    def simple_perceptron(x, bias = -0.5):
+    def simple_perceptron(x, bias=-0.5):
         '''
         単純パーセプトロン
         :param 論理演算の入力値の組合せ
@@ -19,7 +19,7 @@ class Perceptron:
         ])
         return y
     
-    def three_layer_perceptron(x, bias = -0.6):
+    def three_layer_perceptron(x, bias=-0.6):
         '''
         3層パーセプトロン
         :param 論理演算の入力値の組合せ
