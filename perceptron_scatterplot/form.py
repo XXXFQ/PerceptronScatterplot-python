@@ -5,7 +5,7 @@ from tkinter import ttk, messagebox
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
-from .perceptron import Perceptron as pla
+from .perceptron import Perceptron
 
 class Application(ttk.Frame):
     def __init__(self, master=None):
@@ -69,17 +69,16 @@ class Application(ttk.Frame):
         label_frame = ttk.LabelFrame(self.frame, text="パーセプトロンの種類")
         
         # ラジオボタンの値
-        self.pla_type_radio_var = tk.IntVar(value = 0)
+        self.pla_type_radio_var = tk.IntVar(value=0)
         
         # ラジオボタン作成
-        radio_text = [ "単純パーセプトロン", "3層パーセプトロン(MLP)" ]
-        for i in range(len(radio_text)):
+        radio_texts = ["単純パーセプトロン", "3層パーセプトロン(MLP)"]
+        for i, radio_text in enumerate(radio_texts):
             self.perceptron_radio = ttk.Radiobutton(
                 label_frame,
                 value=i,
-                text=radio_text[i],
-                variable=self.pla_type_radio_var
-            )
+                text=radio_text,
+                variable=self.pla_type_radio_var)
             self.perceptron_radio.pack(side=tk.TOP, anchor=tk.W)
         
         # 配置
@@ -147,22 +146,21 @@ class Application(ttk.Frame):
             
             # テストデータを生成
             x = np.array([
-                [ random.random(), random.random() ]
-                for i in range(int(self.datacount_input_box.get()))
+                [random.random(), random.random()]
+                for _ in range(int(self.datacount_input_box.get()))
             ])
             
             # パーセプトロンの散布図を描写
-            mode = self.pla_type_radio_var.get()
-            if mode == 0:
-                y = pla.simple_perceptron(x, BIAS)
+            if (mode := self.pla_type_radio_var.get()) == 0:
+                y = Perceptron.simple_perceptron(x, BIAS)
             elif mode == 1:
-                y = pla.three_layer_perceptron(x, BIAS)
+                y = Perceptron.three_layer_perceptron(x, BIAS)
             
             # 散布図を表示
             self.ax.clear()
             self.ax.scatter(
                 x[:, 0], x[:, 1],
-                color=[ "Yellow" if out == 0 else "Magenta" for out in y ],
+                color=["Yellow" if out == 0 else "Magenta" for out in y],
                 marker="o",
                 s=30
             )
