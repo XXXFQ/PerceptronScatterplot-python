@@ -1,4 +1,14 @@
-from .form import *
+import tkinter as tk
 
-if __name__ == '__main__':
-    form.main()
+from .application import Application
+
+def main():
+    root = tk.Tk()
+    root.geometry("900x500")
+    root.minsize(width=900, height=500)
+    app = Application(master=root)
+    app.mainloop()
+
+__all__ = [
+    'main',
+]

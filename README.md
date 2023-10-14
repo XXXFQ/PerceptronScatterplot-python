@@ -1,4 +1,4 @@
 # PerceptronScatterplot-python
 パーセプトロンのシミュレーターの様なもの。
 
-![](./Docs/Screenshots/0-Home.png)
+![](./document/Screenshots/0-Home.png)

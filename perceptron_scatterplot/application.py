@@ -167,10 +167,3 @@ class Application(ttk.Frame):
             self.fig_canvas.draw()
         except (ValueError):
             messagebox.showerror("エラー!", "数値を入力して下さい。")
-
-def main():
-    root = tk.Tk()
-    root.geometry("900x500")
-    root.minsize(width=900, height=500)
-    app = Application(master=root)
-    app.mainloop()

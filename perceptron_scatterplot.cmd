@@ -1,0 +1,1 @@
+@py -m "perceptron_scatterplot" %*
