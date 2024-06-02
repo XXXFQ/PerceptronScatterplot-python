@@ -1,14 +1,52 @@
 import random
+
 import numpy as np
 import tkinter as tk
 from tkinter import ttk, messagebox
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg,
+    NavigationToolbar2Tk
+)
 
-from .perceptron import Perceptron
+from .perceptron import (
+    simple_perceptron,
+    three_layer_perceptron
+)
 
 class Application(ttk.Frame):
     def __init__(self, master=None):
+        '''
+        アプリケーションの初期化
+        
+        Parameters
+        ----------
+        master : tk.Tk
+            親ウィンドウ
+        
+        Attributes
+        ----------
+        master : tk.Tk
+            親ウィンドウ
+        frame : tk.Frame
+            通常のフレーム
+        ax : matplotlib.axes.Axes
+            座標軸
+        fig_canvas : FigureCanvasTkAgg
+            matplotlibの描画領域
+        toolbar : NavigationToolbar2Tk
+            matplotlibのツールバー
+        s_perceptron_button : ttk.Button
+            散布図描写ボタン
+        perceptron_radio : ttk.Radiobutton
+            パーセプトロンの種類を選択するラジオボタン
+        pla_type_radio_var : tk.IntVar
+            ラジオボタンの値
+        bias_input_box : ttk.Entry
+            バイアス値入力テキストボックス
+        datacount_input_box : ttk.Entry
+            データ数入力テキストボックス
+        '''
         super().__init__(master)
         self.master = master
         self.master.title('Perceptron Scatterplot v1.0')
@@ -30,6 +68,9 @@ class Application(ttk.Frame):
         self.create_datacount_input_box()
     
     def create_graph_frame(self):
+        '''
+        グラフ描写用フレーム作成
+        '''
         # matplotlib配置用フレーム
         qraph_frame = ttk.Frame(self.master)
         
@@ -152,9 +193,9 @@ class Application(ttk.Frame):
             
             # パーセプトロンの散布図を描写
             if (mode := self.pla_type_radio_var.get()) == 0:
-                y = Perceptron.simple_perceptron(x, BIAS)
+                y = simple_perceptron(x, BIAS)
             elif mode == 1:
-                y = Perceptron.three_layer_perceptron(x, BIAS)
+                y = three_layer_perceptron(x, BIAS)
             
             # 散布図を表示
             self.ax.clear()
